@@ -4,74 +4,74 @@
 (in-package :valtan-core)
 
 (defun js-symbol-p (symbol)
-  (cl:and (symbolp symbol) (cl:string= #"JS" (cl:package-name (cl:symbol-package symbol)))))
+  (common-lisp:and (symbolp symbol) (common-lisp:string= #"JS" (common-lisp:package-name (common-lisp:symbol-package symbol)))))
 
 (defmacro ffi:define-function (name arguments &body body)
   `(progn
     (ffi:var ,name)
     (ffi:set
-     ,(cl:cond ((cl:stringp name) name)
+     ,(common-lisp:cond ((common-lisp:stringp name) name)
                ((js-symbol-p name)
                 name)
-               (t (cl:string name)))
+               (t (common-lisp:string name)))
      (lambda ,arguments ,@body))))
 
 (defmacro ffi:define (var value)
   `(progn
     (ffi:var ,var)
     (ffi:set
-     ,(cl:cond ((cl:stringp var) var)
+     ,(common-lisp:cond ((common-lisp:stringp var) var)
                ((js-symbol-p var) var)
-               (t (cl:string var)))
+               (t (common-lisp:string var)))
      (ffi:cl->js ,value))))
 
 (defun ffi::%object (&rest plist)
   (let ((object (js::-object)))
-    (cl:do ((cl:rest plist (cl:cddr cl:rest)))
-           ((cl:null cl:rest))
-      (let ((key (cl:car cl:rest)) (value (cl:cadr cl:rest)))
+    (common-lisp:do ((common-lisp:rest plist (common-lisp:cddr common-lisp:rest)))
+           ((common-lisp:null common-lisp:rest))
+      (let ((key (common-lisp:car common-lisp:rest)) (value (common-lisp:cadr common-lisp:rest)))
         (ffi:set
          (ffi:aget object
-                   (cl:cond ((cl:stringp key) (ffi:cl->js key))
-                            ((cl:keywordp key)
-                             (ffi:cl->js (compiler::kebab-to-lower-camel-case (cl:string key))))
+                   (common-lisp:cond ((common-lisp:stringp key) (ffi:cl->js key))
+                            ((common-lisp:keywordp key)
+                             (ffi:cl->js (compiler::kebab-to-lower-camel-case (common-lisp:string key))))
                             (t key)))
          value)))
     object))
 
 (defmacro ffi:object (&rest plist)
   (let ((new-plist 'nil))
-    (cl:do ((plist plist (cl:cddr plist)))
-           ((cl:null plist))
-      (let ((key (cl:car plist)) (value (cl:cadr plist)))
-        (cl:push
-         (cl:cond ((cl:stringp key) `(ffi:cl->js ,key))
-                  ((cl:keywordp key)
-                   `(ffi:cl->js ,(compiler::kebab-to-lower-camel-case (cl:string key))))
+    (common-lisp:do ((plist plist (common-lisp:cddr plist)))
+           ((common-lisp:null plist))
+      (let ((key (common-lisp:car plist)) (value (common-lisp:cadr plist)))
+        (common-lisp:push
+         (common-lisp:cond ((common-lisp:stringp key) `(ffi:cl->js ,key))
+                  ((common-lisp:keywordp key)
+                   `(ffi:cl->js ,(compiler::kebab-to-lower-camel-case (common-lisp:string key))))
                   (t key))
          new-plist)
-        (cl:push value new-plist)))
-    `(ffi::%object ,@(cl:nreverse new-plist))))
+        (common-lisp:push value new-plist)))
+    `(ffi::%object ,@(common-lisp:nreverse new-plist))))
 
 (defun ffi:array (&rest args)
   (declare (ignorable args))
   #+valtan
-  (cl:apply (ffi:ref "Array") args)
+  (common-lisp:apply (ffi:ref "Array") args)
   #-valtan
-  (cl:error "unimplemented"))
+  (common-lisp:error "unimplemented"))
 
 (defun ffi:js-eval (x)
   (declare (ignorable x))
   #+valtan
   (let* ((code (*:string-append* "(function(lisp) { 'use strict'; " x "; });"))
          (fn (js::eval (ffi:cl->js code))))
-    (cl:funcall fn (ffi:ref "lisp")))
+    (common-lisp:funcall fn (ffi:ref "lisp")))
   #-valtan
-  (cl:error "unimplemented"))
+  (common-lisp:error "unimplemented"))
 
 (defun ffi:cl->js (value)
-  (cl:cond ((cl:stringp value) (array-contents value))
-           ((cl:vectorp value) (array-contents value))
+  (common-lisp:cond ((common-lisp:stringp value) (array-contents value))
+           ((common-lisp:vectorp value) (array-contents value))
            ;; ((listp value)
            ;;  (*:list-to-raw-array value))
            ;; ((eq value t)
@@ -84,7 +84,7 @@
            (t value)))
 
 (defun ffi:js->cl (value)
-  (cl:cond ((eq (ffi:typeof value) (*:array-to-raw-string "string"))
+  (common-lisp:cond ((eq (ffi:typeof value) (*:array-to-raw-string "string"))
             (*:raw-string-to-array value))
            ((ffi:instanceof value (ffi:ref "Array"))
             (*:raw-array-to-array value))

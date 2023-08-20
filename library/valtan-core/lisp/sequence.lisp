@@ -79,7 +79,7 @@
         (t
          (type-error sequence 'sequence))))
 
-(defun (cl:setf elt) (value sequence index)
+(defun (common-lisp:setf elt) (value sequence index)
   (cond ((consp sequence)
          (let ((result (nthcdr index sequence)))
            (rplaca result value)))
@@ -172,7 +172,7 @@
         (t
          (type-error sequence 'sequence))))
 
-(defun (cl:setf subseq) (new-subsequence sequence start &optional end)
+(defun (common-lisp:setf subseq) (new-subsequence sequence start &optional end)
   (replace sequence new-subsequence :start1 start :end1 end)
   new-subsequence)
 

@@ -7,7 +7,7 @@
 
 (declaim (ftype function make-condition class-of find-class subclassp))
 (defun coerce-to-condition (datum arguments default-condition)
-  (cond ((or (cl:stringp datum) (functionp datum))
+  (cond ((or (common-lisp:stringp datum) (functionp datum))
          (make-condition default-condition
                          :format-control datum
                          :format-arguments arguments))
@@ -93,34 +93,34 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defun gen-handler-case-1 (error-clauses form)
-    (let ((g-form-name (cl:gensym))
+    (let ((g-form-name (common-lisp:gensym))
           (fun-names
-            (cl:mapcar (lambda (arg) (declare (ignore arg)) (cl:gensym))
+            (common-lisp:mapcar (lambda (arg) (declare (ignore arg)) (common-lisp:gensym))
                        error-clauses))
           (tag-names
-            (cl:mapcar (lambda (arg) (declare (ignore arg)) (cl:gensym))
+            (common-lisp:mapcar (lambda (arg) (declare (ignore arg)) (common-lisp:gensym))
                        error-clauses))
-          (g-block-name (cl:gensym))
-          (g-temp (cl:gensym)))
+          (g-block-name (common-lisp:gensym))
+          (g-temp (common-lisp:gensym)))
       `(flet ((,g-form-name ()
                 ,form)
-              ,@(cl:mapcar (lambda (c fun-name) `(,fun-name ,@(cl:cdr c))) error-clauses fun-names))
+              ,@(common-lisp:mapcar (lambda (c fun-name) `(,fun-name ,@(common-lisp:cdr c))) error-clauses fun-names))
          (let ((,g-temp))
            (block ,g-block-name
              (tagbody
-               (cl:handler-bind ,(cl:mapcar
+               (common-lisp:handler-bind ,(common-lisp:mapcar
                                   (lambda (c tag-name)
-                                    (let ((arg (cl:gensym)))
-                                      `(,(cl:car c)
+                                    (let ((arg (common-lisp:gensym)))
+                                      `(,(common-lisp:car c)
                                         (lambda (,arg) (setq ,g-temp ,arg) (go ,tag-name)))))
                                   error-clauses tag-names)
                  (return-from ,g-block-name (,g-form-name)))
-               ,@(cl:mapcan
+               ,@(common-lisp:mapcan
                    (lambda (tag-name fun-name error-clause)
                      `(,tag-name
                        (return-from ,g-block-name
                          (,fun-name
-                          ,@(if (cl:null (cl:cadr error-clause))
+                          ,@(if (common-lisp:null (common-lisp:cadr error-clause))
                                 nil
                                 `(,g-temp))))))
                   tag-names fun-names error-clauses))))))))
@@ -131,8 +131,8 @@
         (no-error-clause
           (find-if (lambda (c) (eq (car c) :no-error)) cases)))
     (if no-error-clause
-        (let ((g-error-return (cl:gensym))
-              (g-normal-return (cl:gensym)))
+        (let ((g-error-return (common-lisp:gensym))
+              (g-normal-return (common-lisp:gensym)))
           `(block ,g-error-return
              (multiple-value-call (lambda ,@(cdr no-error-clause))
                (block ,g-normal-return

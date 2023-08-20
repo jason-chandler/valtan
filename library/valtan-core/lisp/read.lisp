@@ -727,8 +727,8 @@
   #+valtan
   (eval (read stream t nil t))
   #-valtan
-  (cl:eval
-   (let ((*package* (cl:find-package :valtan-core)))
+  (common-lisp:eval
+   (let ((*package* (common-lisp:find-package :valtan-core)))
      (read stream t nil t))))
 
 (defun cl-string-reader (stream sub-char arg)
@@ -817,7 +817,7 @@
 
 (copy-readtable nil *readtable*)
 
-(cl:defpackage :valtan-core.reader
+(common-lisp:defpackage :valtan-core.reader
   (:use)
   (:import-from :valtan-core
                 . #1=(:cons-reader

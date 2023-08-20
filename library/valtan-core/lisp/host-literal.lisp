@@ -1,54 +1,54 @@
 (in-package :valtan-core)
 
-(cl:defvar *valtan-readtable* (cl:copy-readtable cl:nil))
-(cl:defvar *plain-readtable* (cl:copy-readtable cl:nil))
+(common-lisp:defvar *valtan-readtable* (common-lisp:copy-readtable common-lisp:nil))
+(common-lisp:defvar *plain-readtable* (common-lisp:copy-readtable common-lisp:nil))
 
-(cl:defmethod cl:make-load-form ((object structure) cl:&optional environment)
-  (cl:declare (cl:ignore environment))
-  (cl:make-load-form-saving-slots object))
+(common-lisp:defmethod common-lisp:make-load-form ((object structure) common-lisp:&optional environment)
+  (common-lisp:declare (common-lisp:ignore environment))
+  (common-lisp:make-load-form-saving-slots object))
 
-(cl:set-macro-character
+(common-lisp:set-macro-character
  #\"
- (cl:lambda (s c)
-   (cl:declare (cl:ignore c))
-   (cl:unread-char #\" s)
-   (cl:let* ((cl:*readtable* *plain-readtable*)
-             (raw-string (cl:read s cl:t cl:nil cl:t)))
+ (common-lisp:lambda (s c)
+   (common-lisp:declare (common-lisp:ignore c))
+   (common-lisp:unread-char #\" s)
+   (common-lisp:let* ((common-lisp:*readtable* *plain-readtable*)
+             (raw-string (common-lisp:read s common-lisp:t common-lisp:nil common-lisp:t)))
      (system::make-structure-array! raw-string)))
  nil
  *valtan-readtable*)
 
-(cl:set-dispatch-macro-character
+(common-lisp:set-dispatch-macro-character
  #\# #\(
- (cl:lambda (s c n)
-   (cl:declare (cl:ignore c n))
-   (cl:unread-char #\( s)
-   (cl:let* ((cl:*readtable* *plain-readtable*)
-             (raw-array (cl:read s cl:t cl:nil cl:t)))
-     (system::make-structure-array! (cl:coerce raw-array 'cl:vector) t)))
+ (common-lisp:lambda (s c n)
+   (common-lisp:declare (common-lisp:ignore c n))
+   (common-lisp:unread-char #\( s)
+   (common-lisp:let* ((common-lisp:*readtable* *plain-readtable*)
+             (raw-array (common-lisp:read s common-lisp:t common-lisp:nil common-lisp:t)))
+     (system::make-structure-array! (common-lisp:coerce raw-array 'common-lisp:vector) t)))
  *valtan-readtable*)
 
-(cl:set-dispatch-macro-character
+(common-lisp:set-dispatch-macro-character
  #\# #\*
- (cl:lambda (s c n)
-   (cl:declare (cl:ignore c n))
-   (cl:let* ((cl:*readtable* *plain-readtable*)
-             (bits (cl:coerce
-                    (cl:loop
-                      :while (cl:member (cl:peek-char cl:nil s cl:t cl:nil cl:t)
+ (common-lisp:lambda (s c n)
+   (common-lisp:declare (common-lisp:ignore c n))
+   (common-lisp:let* ((common-lisp:*readtable* *plain-readtable*)
+             (bits (common-lisp:coerce
+                    (common-lisp:loop
+                      :while (common-lisp:member (common-lisp:peek-char common-lisp:nil s common-lisp:t common-lisp:nil common-lisp:t)
                                         '(#\0 #\1))
-                      :collect (cl:ecase (cl:read-char s cl:t cl:nil cl:t)
+                      :collect (common-lisp:ecase (common-lisp:read-char s common-lisp:t common-lisp:nil common-lisp:t)
                                  (#\0 0)
                                  (#\1 1)))
-                    'cl:vector)))
+                    'common-lisp:vector)))
      (system::make-structure-array! bits 't)))
  *valtan-readtable*)
 
-(cl:set-dispatch-macro-character
+(common-lisp:set-dispatch-macro-character
  #\# #\"
- (cl:lambda (s c n)
-   (cl:declare (cl:ignore c n))
-   (cl:unread-char #\" s)
-   (let ((cl:*readtable* *plain-readtable*))
-     (cl:read s cl:t cl:nil cl:t)))
+ (common-lisp:lambda (s c n)
+   (common-lisp:declare (common-lisp:ignore c n))
+   (common-lisp:unread-char #\" s)
+   (let ((common-lisp:*readtable* *plain-readtable*))
+     (common-lisp:read s common-lisp:t common-lisp:nil common-lisp:t)))
  *valtan-readtable*)

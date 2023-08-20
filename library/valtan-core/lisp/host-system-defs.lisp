@@ -1,114 +1,114 @@
-(cl:in-package :valtan-core)
+(common-lisp:in-package :valtan-core)
 
-(cl:defparameter system:+null+ '#:null)
+(common-lisp:defparameter system:+null+ '#:null)
 
-(cl:defclass structure ()
+(common-lisp:defclass structure ()
   ((name :initarg :name :reader structure-name)
    (values :initarg :values :reader structure-values)))
 
-(cl:defmethod cl:print-object ((object structure) stream)
-  (cl:case (structure-name object)
+(common-lisp:defmethod common-lisp:print-object ((object structure) stream)
+  (common-lisp:case (structure-name object)
     ;; ((string array)
-    ;;  (cl:prin1 (cl:first (structure-values object)) stream))
-    (cl:otherwise
-     (cl:print-unreadable-object (object stream)
-       (cl:format stream "STRUCTUER ~A ~S"
+    ;;  (common-lisp:prin1 (common-lisp:first (structure-values object)) stream))
+    (common-lisp:otherwise
+     (common-lisp:print-unreadable-object (object stream)
+       (common-lisp:format stream "STRUCTUER ~A ~S"
                   (structure-name object)
                   (structure-values object))))))
 
-(cl:defun system:structure-p (structure)
-  (cl:typep structure 'structure))
+(common-lisp:defun system:structure-p (structure)
+  (common-lisp:typep structure 'structure))
 
-(cl:defun system:make-structure (name &rest args)
-  (cl:make-instance 'structure :name name :values args))
+(common-lisp:defun system:make-structure (name &rest args)
+  (common-lisp:make-instance 'structure :name name :values args))
 
-(cl:defun system:%structure-name (structure)
+(common-lisp:defun system:%structure-name (structure)
   (structure-name structure))
 
-(cl:defun system:%structure-slot-count (structure)
-  (cl:length (structure-values structure)))
+(common-lisp:defun system:%structure-slot-count (structure)
+  (common-lisp:length (structure-values structure)))
 
-(cl:defun system:%structure-ref (structure index)
-  (cl:elt (structure-values structure) index))
+(common-lisp:defun system:%structure-ref (structure index)
+  (common-lisp:elt (structure-values structure) index))
 
-(cl:defun system:%copy-structure (structure)
-  (cl:make-instance 'structure
+(common-lisp:defun system:%copy-structure (structure)
+  (common-lisp:make-instance 'structure
                     :name (structure-name structure)
                     :values (structure-values structure)))
 
-(cl:defun system:%structure-set (structure index value)
-  (cl:setf (cl:elt (structure-values structure) index)
+(common-lisp:defun system:%structure-set (structure index value)
+  (common-lisp:setf (common-lisp:elt (structure-values structure) index)
            value))
 
-(cl:defun system::make-structure-array! (contents &optional (element-type t element-type-p))
+(common-lisp:defun system::make-structure-array! (contents &optional (element-type t element-type-p))
   (system:make-structure 'array
                          contents
-                         (cl:list (cl:length contents))
-                         (cl:length contents)
+                         (common-lisp:list (common-lisp:length contents))
+                         (common-lisp:length contents)
                          nil
                          nil
                          nil
                          1
-                         (cl:cond (element-type-p element-type)
-                                  ((cl:stringp contents) 'character)
+                         (common-lisp:cond (element-type-p element-type)
+                                  ((common-lisp:stringp contents) 'character)
                                   (t 't))))
 
 
 ;;; lisp.jsに対応
-(cl:defun system:make-symbol (name)
-  (cl:make-symbol name))
+(common-lisp:defun system:make-symbol (name)
+  (common-lisp:make-symbol name))
 
-(cl:defun system:symbol-plist (symbol)
-  (cl:symbol-plist symbol))
+(common-lisp:defun system:symbol-plist (symbol)
+  (common-lisp:symbol-plist symbol))
 
-(cl:defun system:put-symbol-plist (symbol plist)
-  (cl:setf (cl:symbol-plist symbol) plist))
+(common-lisp:defun system:put-symbol-plist (symbol plist)
+  (common-lisp:setf (common-lisp:symbol-plist symbol) plist))
 
-(cl:defun system:symbol-value (symbol)
-  (cl:symbol-value symbol))
+(common-lisp:defun system:symbol-value (symbol)
+  (common-lisp:symbol-value symbol))
 
-(cl:defun system:symbol-function (symbol)
-  (cl:symbol-function symbol))
+(common-lisp:defun system:symbol-function (symbol)
+  (common-lisp:symbol-function symbol))
 
-(cl:defun system:%set (symbol value)
-  (cl:set symbol value))
+(common-lisp:defun system:%set (symbol value)
+  (common-lisp:set symbol value))
 
-(cl:defun system:symbol-name (symbol)
-  (cl:or (cl:symbol-name symbol)
+(common-lisp:defun system:symbol-name (symbol)
+  (common-lisp:or (common-lisp:symbol-name symbol)
          system:+null+))
 
-(cl:defun system:symbol-package-name (symbol)
-  (cl:let ((package (cl:symbol-package symbol)))
+(common-lisp:defun system:symbol-package-name (symbol)
+  (common-lisp:let ((package (common-lisp:symbol-package symbol)))
     (if package
-        (cl:package-name package)
+        (common-lisp:package-name package)
         system:+null+)))
 
-(cl:defun system:fset (symbol function)
-  (cl:setf (cl:symbol-function symbol) function))
+(common-lisp:defun system:fset (symbol function)
+  (common-lisp:setf (common-lisp:symbol-function symbol) function))
 
-(cl:defun system:map-package-symbols (package function)
-  (cl:do-symbols (s package nil)
-    (cl:funcall function s)))
+(common-lisp:defun system:map-package-symbols (package function)
+  (common-lisp:do-symbols (s package nil)
+    (common-lisp:funcall function s)))
 
-(cl:defun system:put (symbol key value)
-  (cl:setf (cl:get symbol key) value))
+(common-lisp:defun system:put (symbol key value)
+  (common-lisp:setf (common-lisp:get symbol key) value))
 
-(cl:defun system:package-name (package)
-  (cl:package-name package))
+(common-lisp:defun system:package-name (package)
+  (common-lisp:package-name package))
 
-(cl:defun system:package-nicknames (package)
-  (cl:package-nicknames package))
+(common-lisp:defun system:package-nicknames (package)
+  (common-lisp:package-nicknames package))
 
-(cl:defun system:intern (name package)
-  (cl:intern name package))
+(common-lisp:defun system:intern (name package)
+  (common-lisp:intern name package))
 
-(cl:defun system:find-symbol (name package)
-  (cl:find-symbol name package))
+(common-lisp:defun system:find-symbol (name package)
+  (common-lisp:find-symbol name package))
 
-(cl:defun system:make-package (name nicknames use-package-names)
-  (cl:make-package name :nicknames nicknames :use use-package-names))
+(common-lisp:defun system:make-package (name nicknames use-package-names)
+  (common-lisp:make-package name :nicknames nicknames :use use-package-names))
 
-(cl:defmacro system:%defpackage (package &key export use nicknames)
+(common-lisp:defmacro system:%defpackage (package &key export use nicknames)
   (flet ((ref-string (structure)
            (if (stringp structure)
                (system:%structure-ref structure 0)
@@ -117,227 +117,227 @@
            (export ',(mapcar #'ref-string export))
            (use ',(mapcar #'ref-string use))
            (nicknames ',(mapcar #'ref-string nicknames)))
-       (let ((package (or (cl:find-package package)
-                          (cl:make-package package :use use :nicknames nicknames))))
-         (cl:export export package)
+       (let ((package (or (common-lisp:find-package package)
+                          (common-lisp:make-package package :use use :nicknames nicknames))))
+         (common-lisp:export export package)
          package))))
 
-(cl:defun system:export (symbols package)
-  (cl:export symbols package))
+(common-lisp:defun system:export (symbols package)
+  (common-lisp:export symbols package))
 
-(cl:defun system:%add (x y)
-  (cl:+ x y))
+(common-lisp:defun system:%add (x y)
+  (common-lisp:+ x y))
 
-(cl:defun system:%sub (x y)
-  (cl:- x y))
+(common-lisp:defun system:%sub (x y)
+  (common-lisp:- x y))
 
-(cl:defun system:%negate (x)
-  (cl:- x))
+(common-lisp:defun system:%negate (x)
+  (common-lisp:- x))
 
-(cl:defun system:%mul (x y)
-  (cl:* x y))
+(common-lisp:defun system:%mul (x y)
+  (common-lisp:* x y))
 
-(cl:defun system:%rem (x y)
-  (values (cl:rem x y)))
+(common-lisp:defun system:%rem (x y)
+  (values (common-lisp:rem x y)))
 
-(cl:defun system:%floor (x y)
-  (values (cl:floor x y)))
+(common-lisp:defun system:%floor (x y)
+  (values (common-lisp:floor x y)))
 
-(cl:defun system:%logand (x y)
-  (cl:logand x y))
+(common-lisp:defun system:%logand (x y)
+  (common-lisp:logand x y))
 
-(cl:defun system:%= (x y)
-  (cl:= x y))
+(common-lisp:defun system:%= (x y)
+  (common-lisp:= x y))
 
-(cl:defun system:%/= (x y)
-  (cl:/= x y))
+(common-lisp:defun system:%/= (x y)
+  (common-lisp:/= x y))
 
-(cl:defun system:%> (x y)
-  (cl:> x y))
+(common-lisp:defun system:%> (x y)
+  (common-lisp:> x y))
 
-(cl:defun system:%< (x y)
-  (cl:< x y))
+(common-lisp:defun system:%< (x y)
+  (common-lisp:< x y))
 
-(cl:defun system:%>= (x y)
-  (cl:>= x y))
+(common-lisp:defun system:%>= (x y)
+  (common-lisp:>= x y))
 
-(cl:defun system:%<= (x y)
-  (cl:<= x y))
+(common-lisp:defun system:%<= (x y)
+  (common-lisp:<= x y))
 
-(cl:defun system:apply (function args)
-  (cl:apply function args))
+(common-lisp:defun system:apply (function args)
+  (common-lisp:apply function args))
 
-(cl:defun system:%car (x)
-  (cl:car x))
+(common-lisp:defun system:%car (x)
+  (common-lisp:car x))
 
-(cl:defun system:%cdr (x)
-  (cl:cdr x))
+(common-lisp:defun system:%cdr (x)
+  (common-lisp:cdr x))
 
-(cl:defun system:%rplaca (cons x)
-  (cl:rplaca cons x))
+(common-lisp:defun system:%rplaca (cons x)
+  (common-lisp:rplaca cons x))
 
-(cl:defun system:%rplacd (cons x)
-  (cl:rplacd cons x))
+(common-lisp:defun system:%rplacd (cons x)
+  (common-lisp:rplacd cons x))
 
-(cl:defun system:raw-array-to-list (raw-array)
+(common-lisp:defun system:raw-array-to-list (raw-array)
   raw-array)
 
-(cl:defun system:list-to-raw-array (list)
+(common-lisp:defun system:list-to-raw-array (list)
   list)
 
-(cl:defmacro system:multiple-value-call (function cl:&rest args)
-  `(cl:multiple-value-call ,function ,@args))
+(common-lisp:defmacro system:multiple-value-call (function common-lisp:&rest args)
+  `(common-lisp:multiple-value-call ,function ,@args))
 
-(cl:defun system:error (value)
-  (cl:error "~A" (system:%structure-ref value 0)))
+(common-lisp:defun system:error (value)
+  (common-lisp:error "~A" (system:%structure-ref value 0)))
 
-(cl:defun system:%code-char (code)
-  (cl:code-char code))
+(common-lisp:defun system:%code-char (code)
+  (common-lisp:code-char code))
 
-(cl:defun system:%char-code (char)
-  (cl:char-code char))
+(common-lisp:defun system:%char-code (char)
+  (common-lisp:char-code char))
 
 
-(cl:defmacro system:defmacro* (name lambda-list cl:&body body)
-  `(cl:defmacro ,name ,lambda-list ,@body))
+(common-lisp:defmacro system:defmacro* (name lambda-list common-lisp:&body body)
+  `(common-lisp:defmacro ,name ,lambda-list ,@body))
 
-(cl:defun system:make-raw-string ()
-  (cl:make-string 0))
+(common-lisp:defun system:make-raw-string ()
+  (common-lisp:make-string 0))
 
-(cl:defun system:expand-raw-string (raw-string n)
-  (let ((new-string (cl:make-string n :initial-element #.(cl:code-char 0))))
-    (cl:replace new-string raw-string)
+(common-lisp:defun system:expand-raw-string (raw-string n)
+  (let ((new-string (common-lisp:make-string n :initial-element #.(common-lisp:code-char 0))))
+    (common-lisp:replace new-string raw-string)
     new-string))
 
-(cl:defun system:code-to-raw-string (code)
-  (cl:string (cl:code-char code)))
+(common-lisp:defun system:code-to-raw-string (code)
+  (common-lisp:string (common-lisp:code-char code)))
 
-(cl:defun system:sub-raw-string/2 (raw-string start)
-  (cl:subseq raw-string start))
+(common-lisp:defun system:sub-raw-string/2 (raw-string start)
+  (common-lisp:subseq raw-string start))
 
-(cl:defun system:sub-raw-string/3 (raw-string start end)
-  (cl:subseq raw-string start end))
+(common-lisp:defun system:sub-raw-string/3 (raw-string start end)
+  (common-lisp:subseq raw-string start end))
 
 (flet ((concat (&rest raw-strings)
-         (cl:apply #'cl:concatenate
-                   'cl:string
-                   (cl:mapcar (cl:lambda (raw-string)
-                                (if (cl:characterp raw-string)
-                                    (cl:string raw-string)
+         (common-lisp:apply #'common-lisp:concatenate
+                   'common-lisp:string
+                   (common-lisp:mapcar (common-lisp:lambda (raw-string)
+                                (if (common-lisp:characterp raw-string)
+                                    (common-lisp:string raw-string)
                                     raw-string))
                               raw-strings))))
-  (cl:defun system:concat-raw-string/2 (raw-string-1 raw-string-2)
+  (common-lisp:defun system:concat-raw-string/2 (raw-string-1 raw-string-2)
     (concat raw-string-1 raw-string-2))
 
-  (cl:defun system:concat-raw-string/3 (raw-string-1 raw-string-2 raw-string-3)
+  (common-lisp:defun system:concat-raw-string/3 (raw-string-1 raw-string-2 raw-string-3)
     (concat raw-string-1 raw-string-2 raw-string-3)))
 
-(cl:defun system:raw-string-upcase (raw-string)
-  (cl:string-upcase raw-string))
+(common-lisp:defun system:raw-string-upcase (raw-string)
+  (common-lisp:string-upcase raw-string))
 
-(cl:defun system:raw-string-downcase (raw-string)
-  (cl:string-downcase raw-string))
+(common-lisp:defun system:raw-string-downcase (raw-string)
+  (common-lisp:string-downcase raw-string))
 
-(cl:defun system:number-to-raw-string (number)
-  (cl:princ-to-string number))
+(common-lisp:defun system:number-to-raw-string (number)
+  (common-lisp:princ-to-string number))
 
-(cl:defun system:make-raw-array (size)
-  (cl:make-array size))
+(common-lisp:defun system:make-raw-array (size)
+  (common-lisp:make-array size))
 
-(cl:defun system:raw-array-length (raw-array)
-  (cl:length raw-array))
+(common-lisp:defun system:raw-array-length (raw-array)
+  (common-lisp:length raw-array))
 
-(cl:defun system:raw-array-ref (raw-array index)
-  (cl:aref raw-array index))
+(common-lisp:defun system:raw-array-ref (raw-array index)
+  (common-lisp:aref raw-array index))
 
-(cl:defun system:raw-array-set (raw-array index value)
-  (cl:setf (cl:aref raw-array index) value))
+(common-lisp:defun system:raw-array-set (raw-array index value)
+  (common-lisp:setf (common-lisp:aref raw-array index) value))
 
-(cl:defun system:fill-raw-array (raw-array element)
-  (cl:fill raw-array element))
+(common-lisp:defun system:fill-raw-array (raw-array element)
+  (common-lisp:fill raw-array element))
 
-(cl:defun system:make-map ()
-  (cl:make-hash-table :test 'cl:equal))
+(common-lisp:defun system:make-map ()
+  (common-lisp:make-hash-table :test 'common-lisp:equal))
 
-(cl:defun system:map-get (map key)
-  (cl:gethash key map))
+(common-lisp:defun system:map-get (map key)
+  (common-lisp:gethash key map))
 
-(cl:defun system:map-set (map key value)
-  (cl:setf (cl:gethash key map) value))
+(common-lisp:defun system:map-set (map key value)
+  (common-lisp:setf (common-lisp:gethash key map) value))
 
-(cl:defun system:map-remove (map key)
-  (cl:remhash key map))
+(common-lisp:defun system:map-remove (map key)
+  (common-lisp:remhash key map))
 
-(cl:defun system:map-length (map)
-  (cl:hash-table-count map))
+(common-lisp:defun system:map-length (map)
+  (common-lisp:hash-table-count map))
 
-(cl:defun system:map-clear (map)
-  (cl:clrhash map))
+(common-lisp:defun system:map-clear (map)
+  (common-lisp:clrhash map))
 
-(cl:defun system:function-name (function)
-  (cl:declare (cl:ignore function))
-  (cl:error "unimplemented"))
+(common-lisp:defun system:function-name (function)
+  (common-lisp:declare (common-lisp:ignore function))
+  (common-lisp:error "unimplemented"))
 
-(cl:defun system:unknown-object-to-string (object)
-  (cl:declare (cl:ignore object))
-  (cl:error "unimplemented"))
+(common-lisp:defun system:unknown-object-to-string (object)
+  (common-lisp:declare (common-lisp:ignore object))
+  (common-lisp:error "unimplemented"))
 
-(cl:defun system:array-to-raw-string (array)
-  (cl:declare (cl:ignore array))
-  (cl:error "unimplemented"))
+(common-lisp:defun system:array-to-raw-string (array)
+  (common-lisp:declare (common-lisp:ignore array))
+  (common-lisp:error "unimplemented"))
 
-(cl:defun system:raw-string-to-array (raw-string)
-  (cl:declare (cl:ignore raw-string))
-  (cl:error "unimplemented"))
+(common-lisp:defun system:raw-string-to-array (raw-string)
+  (common-lisp:declare (common-lisp:ignore raw-string))
+  (common-lisp:error "unimplemented"))
 
-(cl:defun system:raw-array-to-array (raw-array)
-  (cl:declare (cl:ignore raw-array))
-  (cl:error "unimplemented"))
+(common-lisp:defun system:raw-array-to-array (raw-array)
+  (common-lisp:declare (common-lisp:ignore raw-array))
+  (common-lisp:error "unimplemented"))
 
-(cl:defun system:read-whole-file (filename)
-  (cl:with-open-file (in filename)
-    (cl:with-output-to-string (out)
-      (cl:let* ((buffer-size 4096)
-                (buffer (cl:make-array buffer-size :element-type 'cl:character)))
-        (cl:loop
-          :for bytes-read := (cl:read-sequence buffer in)
-          :do (cl:write-sequence buffer out :start 0 :end bytes-read)
-          :while (cl:= bytes-read buffer-size))))))
+(common-lisp:defun system:read-whole-file (filename)
+  (common-lisp:with-open-file (in filename)
+    (common-lisp:with-output-to-string (out)
+      (common-lisp:let* ((buffer-size 4096)
+                (buffer (common-lisp:make-array buffer-size :element-type 'common-lisp:character)))
+        (common-lisp:loop
+          :for bytes-read := (common-lisp:read-sequence buffer in)
+          :do (common-lisp:write-sequence buffer out :start 0 :end bytes-read)
+          :while (common-lisp:= bytes-read buffer-size))))))
 
-(cl:defun system:write-raw-string-to-stdout (raw-string)
-  (cl:write-string raw-string))
+(common-lisp:defun system:write-raw-string-to-stdout (raw-string)
+  (common-lisp:write-string raw-string))
 
-(cl:defun system:random (n)
-  (cl:random n))
-
-
-(cl:defun js::-object ()
-  (cl:error "unimplemented"))
-
-(cl:defun js::eval (x)
-  (cl:declare (cl:ignore x))
-  (cl:error "unimplemented"))
-
-(cl:defun js::console.log (raw-string)
-  (cl:declare (cl:ignore raw-string))
-  (cl:error "unimplemented"))
+(common-lisp:defun system:random (n)
+  (common-lisp:random n))
 
 
-(cl:defun ffi:set (var value)
-  (cl:declare (cl:ignore var value))
-  (cl:error "unimplemented"))
+(common-lisp:defun js::-object ()
+  (common-lisp:error "unimplemented"))
 
-(cl:defun ffi:aget (array index)
-  (cl:aref array index))
+(common-lisp:defun js::eval (x)
+  (common-lisp:declare (common-lisp:ignore x))
+  (common-lisp:error "unimplemented"))
 
-(cl:defun ffi:ref (cl:&rest args)
-  (cl:declare (cl:ignore args))
-  (cl:error "unimplemented"))
+(common-lisp:defun js::console.log (raw-string)
+  (common-lisp:declare (common-lisp:ignore raw-string))
+  (common-lisp:error "unimplemented"))
 
-(cl:defun ffi:typeof (x)
-  (cl:declare (cl:ignore x))
-  (cl:error "unimplemented"))
+
+(common-lisp:defun ffi:set (var value)
+  (common-lisp:declare (common-lisp:ignore var value))
+  (common-lisp:error "unimplemented"))
 
-(cl:defun ffi:instanceof (value instance)
-  (cl:declare (cl:ignore value instance))
-  (cl:error "unimplemented"))
+(common-lisp:defun ffi:aget (array index)
+  (common-lisp:aref array index))
+
+(common-lisp:defun ffi:ref (common-lisp:&rest args)
+  (common-lisp:declare (common-lisp:ignore args))
+  (common-lisp:error "unimplemented"))
+
+(common-lisp:defun ffi:typeof (x)
+  (common-lisp:declare (common-lisp:ignore x))
+  (common-lisp:error "unimplemented"))
+
+(common-lisp:defun ffi:instanceof (value instance)
+  (common-lisp:declare (common-lisp:ignore value instance))
+  (common-lisp:error "unimplemented"))

@@ -1,6 +1,6 @@
-(cl:defpackage :valtan-core/loop
+(common-lisp:defpackage :valtan-core/loop
   (:use :cl))
-(cl:in-package :valtan-core/loop)
+(common-lisp:in-package :valtan-core/loop)
 
 (defvar *loop-exps*)
 
@@ -152,7 +152,7 @@
 
 (defun parse-type-spec ()
   (let ((x (lookahead)))
-    (cond ((member x '(cl:fixnum cl:float cl:t cl:nil))
+    (cond ((member x '(common-lisp:fixnum common-lisp:float common-lisp:t common-lisp:nil))
            (next-exp))
           ((eq (ensure-keyword x) :of-type)
            (next-exp)
@@ -192,9 +192,9 @@
                    (t
                     (list (list d-var
                                 (case d-type-spec
-                                  ((cl:fixnum cl:integer)
+                                  ((common-lisp:fixnum common-lisp:integer)
                                    0)
-                                  ((cl:float)
+                                  ((common-lisp:float)
                                    0.0)
                                   (otherwise
                                    nil))))))))

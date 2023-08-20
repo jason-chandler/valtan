@@ -64,7 +64,7 @@
 (defmacro defpackage (package &body options)
   (when compiler::*in-host-runtime*
     ;; ホスト側のsbclで定義しないとin-packageもエラーになる
-    (cl:eval `(defpackage ,package ,@options)))
+    (common-lisp:eval `(defpackage ,package ,@options)))
   (let ((export (cdr (assoc :export options)))
         (use (cdr (assoc :use options)))
         (nicknames (cdr (assoc :nicknames options))))

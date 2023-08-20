@@ -1,5 +1,5 @@
-(cl:defpackage :compiler
-  (:use :cl)
+(common-lisp:defpackage :compiler
+  (:use :common-lisp)
   (:export :def-implementation
            :compile-toplevel
            :make-emitter-stream
@@ -7,9 +7,9 @@
            :set-source-map))
 
 ;; TODO:
-(cl:defvar compiler::*in-host-runtime* nil)
+(common-lisp:defvar compiler::*in-host-runtime* nil)
 
-(cl:defpackage :ffi
+(common-lisp:defpackage :ffi
   (:use)
   (:export #:instanceof
            #:require
@@ -29,10 +29,10 @@
            #:js->cl
            #:typeof))
 
-(cl:defpackage :js
+(common-lisp:defpackage :js
   (:use))
 
-(cl:defpackage :system
+(common-lisp:defpackage :system
   (:nicknames :*)
   (:use)
   (:export :+null+
@@ -127,7 +127,7 @@
            :backquote
            :random))
 
-(cl:defpackage :valtan-core
+(common-lisp:defpackage :valtan-core
   (:use)
   (:import-from
    :common-lisp

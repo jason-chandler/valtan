@@ -34,11 +34,11 @@
              (symbol-function x)))
       (error "The function ~S is undefined." x)))
 
-(defun (cl:setf fdefinition) (function x)
+(defun (common-lisp:setf fdefinition) (function x)
   (or (cond ((consp x)
              (when (eq 'setf (car x))
                ;; TODO: clプリフィクスを外しても動くようにする
-               (cl:setf (cl:get (cadr x) '*:fdefinition-setf)
+               (common-lisp:setf (common-lisp:get (cadr x) '*:fdefinition-setf)
                         function)))
             ((symbolp x)
              (setf (symbol-function x) function)))

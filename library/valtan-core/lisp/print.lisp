@@ -129,7 +129,7 @@
   (write-string ")" stream))
 
 (defun print-function (function stream)
-  (cl:print-unreadable-object (function stream)
+  (common-lisp:print-unreadable-object (function stream)
     (write-string "Function" stream)
     (let ((name (system:function-name function)))
       (when name
@@ -137,7 +137,7 @@
         (write-string name stream)))))
 
 (defun print-package (package stream)
-  (cl:print-unreadable-object (package stream)
+  (common-lisp:print-unreadable-object (package stream)
     (write-string "PACKAGE " stream)
     (write-char #\" stream)
     (write-string (package-name package) stream)
@@ -183,7 +183,7 @@
         ((*:structure-p object)
          (print-structure object stream))
         (t
-         (cl:print-unreadable-object (nil stream)
+         (common-lisp:print-unreadable-object (nil stream)
            (write-string (system:unknown-object-to-string object)
                          stream)))))
 

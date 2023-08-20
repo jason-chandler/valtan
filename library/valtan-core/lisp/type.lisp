@@ -34,8 +34,8 @@
 (defun deftype-expander (symbol)
   (get symbol 'deftype-expander))
 
-(defun (cl:setf deftype-expander) (expander symbol)
-  (cl:setf (cl:get symbol 'deftype-expander) expander))
+(defun (common-lisp:setf deftype-expander) (expander symbol)
+  (common-lisp:setf (common-lisp:get symbol 'deftype-expander) expander))
 
 (defun expand-deftype (type)
   (do ()
@@ -69,7 +69,7 @@
     (list (listp object))
     (cons (consp object))
     (symbol (symbolp object))
-    (string (cl:stringp object))
+    (string (common-lisp:stringp object))
     ;; (hash-table (hash-table-p object))
     (vector (vectorp object))
     ;; (array (arrayp object))
@@ -96,17 +96,17 @@
          (values nil nil))))
 
 (defmacro typecase (keyform &body cases)
-  (let ((gvalue (cl:gensym)))
+  (let ((gvalue (common-lisp:gensym)))
     `(let ((,gvalue ,keyform))
-       (cond ,@(cl:mapcar (lambda (c)
-                            (cl:destructuring-bind (type . body) c
+       (cond ,@(common-lisp:mapcar (lambda (c)
+                            (common-lisp:destructuring-bind (type . body) c
                               (if (eq type 'otherwise)
                                   `(t ,@body)
                                   `((typep ,gvalue ',type) ,@body))))
                           cases)))))
 
 (defmacro etypecase (keyform &body cases)
-  (let ((gvalue (cl:gensym))
+  (let ((gvalue (common-lisp:gensym))
         (expected-type
           `(or ,@(mapcar #'first cases))))
     `(let ((,gvalue ,keyform))

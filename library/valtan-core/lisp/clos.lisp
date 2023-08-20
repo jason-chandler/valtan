@@ -52,7 +52,7 @@
              slot-name class))
     (cdr elt)))
 
-(defun (cl:setf %slot-value) (value class slot-name)
+(defun (common-lisp:setf %slot-value) (value class slot-name)
   (let ((elt (assoc slot-name (standard-instance-slots class))))
     (if elt
         (setf (cdr elt) value)
@@ -62,37 +62,37 @@
 (defun slot-value (object slot-name)
   (%slot-value object slot-name))
 
-(defun (cl:setf slot-value) (value object slot-name)
+(defun (common-lisp:setf slot-value) (value object slot-name)
   (setf (%slot-value object slot-name) value))
 
 (defun class-name (class)
   (%slot-value class 'name))
 
-(defun (cl:setf class-name) (name class)
+(defun (common-lisp:setf class-name) (name class)
   (setf (%slot-value class 'name) name))
 
 (defun class-precedence-list (class)
   (%slot-value class 'precedence-list))
 
-(defun (cl:setf class-precedence-list) (precedence-list class)
+(defun (common-lisp:setf class-precedence-list) (precedence-list class)
   (setf (%slot-value class 'precedence-list) precedence-list))
 
 (defun class-direct-superclasses (class)
   (%slot-value class 'direct-superclasses))
 
-(defun (cl:setf class-direct-superclasses) (direct-superclasses class)
+(defun (common-lisp:setf class-direct-superclasses) (direct-superclasses class)
   (setf (%slot-value class 'direct-superclasses) direct-superclasses))
 
 (defun class-direct-slots (class)
   (%slot-value class 'direct-slots))
 
-(defun (cl:setf class-direct-slots) (direct-slots class)
+(defun (common-lisp:setf class-direct-slots) (direct-slots class)
   (setf (%slot-value class 'direct-slots) direct-slots))
 
 (defun class-direct-subclasses (class)
   (%slot-value class 'direct-subclasses))
 
-(defun (cl:setf class-direct-subclasses) (direct-subclasses class)
+(defun (common-lisp:setf class-direct-subclasses) (direct-subclasses class)
   (setf (%slot-value class 'direct-subclasses) direct-subclasses))
 
 ;;; XXX:
@@ -103,25 +103,25 @@
 ;; (defun class-direct-methods (class)
 ;;   (%slot-value class 'direct-methods))
 
-;; (defun (cl:setf class-direct-methods) (direct-methods class)
+;; (defun (common-lisp:setf class-direct-methods) (direct-methods class)
 ;;   (setf (%slot-value class 'direct-methods) direct-methods))
 
 (defun class-direct-default-initargs (class)
   (%slot-value class 'direct-default-initargs))
 
-(defun (cl:setf class-direct-default-initargs) (direct-default-initargs class)
+(defun (common-lisp:setf class-direct-default-initargs) (direct-default-initargs class)
   (setf (%slot-value class 'direct-default-initargs) direct-default-initargs))
 
 (defun class-slots (class)
   (%slot-value class 'slots))
 
-(defun (cl:setf class-slots) (slots class)
+(defun (common-lisp:setf class-slots) (slots class)
   (setf (%slot-value class 'slots) slots))
 
 (defun class-default-initargs (class)
   (%slot-value class 'default-initargs))
 
-(defun (cl:setf class-default-initargs) (default-initargs class)
+(defun (common-lisp:setf class-default-initargs) (default-initargs class)
   (setf (%slot-value class 'default-initargs) default-initargs))
 
 (defun class-of (x)
@@ -168,7 +168,7 @@
         (error "There is no class named ~S." symbol))
       class))
 
-  (defun (cl:setf find-class) (class symbol &optional errorp environment)
+  (defun (common-lisp:setf find-class) (class symbol &optional errorp environment)
     (declare (ignore errorp environment))
     (setf (gethash symbol class-table) class)))
 
@@ -483,37 +483,37 @@
 (defun generic-function-name (gf)
   (%slot-value gf 'name))
 
-(defun (cl:setf generic-function-name) (name gf)
+(defun (common-lisp:setf generic-function-name) (name gf)
   (setf (%slot-value gf 'name) name))
 
 (defun generic-function-methods (gf)
   (%slot-value gf 'methods))
 
-(defun (cl:setf generic-function-methods) (methods gf)
+(defun (common-lisp:setf generic-function-methods) (methods gf)
   (setf (%slot-value gf 'methods) methods))
 
 (defun generic-function-lambda-list (gf)
   (%slot-value gf 'lambda-list))
 
-(defun (cl:setf generic-function-lambda-list) (lambda-list gf)
+(defun (common-lisp:setf generic-function-lambda-list) (lambda-list gf)
   (setf (%slot-value gf 'lambda-list) lambda-list))
 
 (defun generic-function-method-class (gf)
   (%slot-value gf 'method-class))
 
-(defun (cl:setf generic-function-method-class) (method-class gf)
+(defun (common-lisp:setf generic-function-method-class) (method-class gf)
   (setf (%slot-value gf 'method-class) method-class))
 
 (defun classes-to-emf-table (gf)
   (%slot-value gf 'classes-to-emf-table))
 
-(defun (cl:setf classes-to-emf-table) (classes-to-emf-table gf)
+(defun (common-lisp:setf classes-to-emf-table) (classes-to-emf-table gf)
   (setf (%slot-value gf 'classes-to-emf-table) classes-to-emf-table))
 
 (defun generic-function-min-argc (gf)
   (%slot-value gf 'min-argc))
 
-(defun (cl:setf generic-function-min-argc) (min-argc gf)
+(defun (common-lisp:setf generic-function-min-argc) (min-argc gf)
   (setf (%slot-value gf 'min-argc) min-argc))
 
 (defun set-funcallable-instance-function (gf function)
@@ -524,31 +524,31 @@
 (defun method-function (method)
   (%slot-value method 'function))
 
-(defun (cl:setf method-function) (function method)
+(defun (common-lisp:setf method-function) (function method)
   (setf (%slot-value method 'function) function))
 
 (defun method-generic-function (method)
   (%slot-value method 'generic-function))
 
-(defun (cl:setf method-generic-function) (generic-function method)
+(defun (common-lisp:setf method-generic-function) (generic-function method)
   (setf (%slot-value method 'generic-function) generic-function))
 
 (defun method-lambda-list (method)
   (%slot-value method 'lambda-list))
 
-(defun (cl:setf method-lambda-list) (lambda-list method)
+(defun (common-lisp:setf method-lambda-list) (lambda-list method)
   (setf (%slot-value method 'lambda-list) lambda-list))
 
 (defun method-specializers (method)
   (%slot-value method 'specializers))
 
-(defun (cl:setf method-specializers) (specializers method)
+(defun (common-lisp:setf method-specializers) (specializers method)
   (setf (%slot-value method 'specializers) specializers))
 
 (defun method-qualifiers (method)
   (%slot-value method 'qualifiers))
 
-(defun (cl:setf method-qualifiers) (qualifiers method)
+(defun (common-lisp:setf method-qualifiers) (qualifiers method)
   (setf (%slot-value method 'qualifiers) qualifiers))
 
 (defmacro defgeneric (function-name lambda-list &body options)
@@ -579,7 +579,7 @@
         (gethash (cadr function-name) setf-generic-function-table)
         (gethash function-name generic-function-table)))
 
-  (defun (cl:setf find-generic-function) (gf function-name)
+  (defun (common-lisp:setf find-generic-function) (gf function-name)
     (if (consp function-name)
         (setf (gethash (cadr function-name) setf-generic-function-table)
               gf)

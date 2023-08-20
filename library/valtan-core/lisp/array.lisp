@@ -222,7 +222,7 @@
 (defun fill-pointer (array)
   (array-fill-pointer array))
 
-(defun (cl:setf fill-pointer) (fill-pointer array)
+(defun (common-lisp:setf fill-pointer) (fill-pointer array)
   (setf (array-fill-pointer array) fill-pointer))
 
 (defun vectorp (x)
@@ -302,7 +302,7 @@
                                     (system:sub-raw-string/2 (array-contents array) (1+ index))))
   value)
 
-(defun (cl:setf aref) (value array &rest subscripts)
+(defun (common-lisp:setf aref) (value array &rest subscripts)
   (unless (arrayp array)
     (type-error array 'array))
   (cond ((eq (array-element-type array) 'character)
@@ -322,7 +322,7 @@
            index array (array-total-size array)))
   (system:raw-array-ref (array-contents array) index))
 
-(defun (cl:setf row-major-aref) (value array index)
+(defun (common-lisp:setf row-major-aref) (value array index)
   (unless (arrayp array)
     (type-error array 'array))
   (cond ((eq (array-element-type array) 'character)
@@ -361,19 +361,19 @@
 (defun svref (vector index)
   (system:raw-array-ref (array-contents vector) index))
 
-(defun (cl:setf svref) (value vector index)
+(defun (common-lisp:setf svref) (value vector index)
   (system:raw-array-set (array-contents vector) index value))
 
 (defun bit (bit-array &rest subscripts)
   (system:raw-array-ref (array-contents bit-array) (%array-row-major-index bit-array subscripts t)))
 
-(defun (cl:setf bit) (bit bit-array &rest subscripts)
+(defun (common-lisp:setf bit) (bit bit-array &rest subscripts)
   (system:raw-array-set (array-contents bit-array) (%array-row-major-index bit-array subscripts t) bit))
 
 (defun sbit (bit-array &rest subscripts)
   (system:raw-array-ref (array-contents bit-array) (%array-row-major-index bit-array subscripts t)))
 
-(defun (cl:setf sbit) (bit bit-array &rest subscripts)
+(defun (common-lisp:setf sbit) (bit bit-array &rest subscripts)
   (system:raw-array-set (array-contents bit-array) (%array-row-major-index bit-array subscripts t) bit))
 
 (defun bit-and (bit-array-1 bit-array-2 &optional opt-arg)

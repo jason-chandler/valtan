@@ -25,7 +25,7 @@
 (defun symbol-plist (symbol)
   (*:symbol-plist symbol))
 
-(defun (cl:setf symbol-plist) (plist symbol)
+(defun (common-lisp:setf symbol-plist) (plist symbol)
   (*:put-symbol-plist symbol plist))
 
 (defsetf get (symbol indicator &optional default)
@@ -57,10 +57,10 @@
     (error "Constant modification: attempt to set SYMBOL-VALUE of ~A." symbol))
   (*:%set symbol value))
 
-(defun (cl:setf symbol-value) (value symbol)
+(defun (common-lisp:setf symbol-value) (value symbol)
   (set symbol value))
 
-(defun (cl:setf symbol-function) (function symbol)
+(defun (common-lisp:setf symbol-function) (function symbol)
   (*:fset symbol function))
 
 (defvar *gensym-counter* 0)
@@ -75,7 +75,7 @@
                         (incf *gensym-counter*))))))
 
 (defvar *gentemp-counter* 0)
-(defvar *package* (cl:find-package :cl-user))
+(defvar *package* (common-lisp:find-package :cl-user))
 
 (defun gentemp (&optional (prefix "T") (package *package*))
   (do ()

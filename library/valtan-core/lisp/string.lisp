@@ -212,7 +212,7 @@
 (defun char (string index)
   (aref string index))
 
-(defun (cl:setf char) (char string index)
+(defun (common-lisp:setf char) (char string index)
   (unless (characterp char)
     (type-error char 'character))
   (setf (aref string index) char))
@@ -220,7 +220,7 @@
 (defun schar (string index)
   (aref string index))
 
-(defun (cl:setf schar) (char string index)
+(defun (common-lisp:setf schar) (char string index)
   (unless (characterp char)
     (type-error char 'character))
   (setf (aref string index) char))

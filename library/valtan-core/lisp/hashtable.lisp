@@ -35,7 +35,7 @@
     (values (if found value default)
             found)))
 
-(defun (cl:setf gethash) (value key hash-table &optional default)
+(defun (common-lisp:setf gethash) (value key hash-table &optional default)
   (declare (ignore default))
   (system:map-set (hash-table-map hash-table) key value)
   (push key (hash-table-keys hash-table))
