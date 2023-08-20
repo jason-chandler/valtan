@@ -354,7 +354,7 @@
                         (p2-literal-1 (cdr x) circle seen)))))
         ((vectorp x)
          (with-output-to-string (out)
-           (write-string (p2-symbol-to-call-value 'cl:vector) out)
+           (write-string (p2-symbol-to-call-value 'common-lisp:vector) out)
            (if (zerop (length x))
                (write-string "(" out)
                (dotimes (i (length x))
@@ -1166,7 +1166,7 @@ return lisp.values1(lisp.setSymbolValue(G_1, lisp.values1(lisp.symbolValue(G_2))
            *p2-literal-symbols*))
 
 (defun p2-finish-output (stream)
-  (let ((fn (p2-symbol-to-call-value 'cl:finish-output)))
+  (let ((fn (p2-symbol-to-call-value 'common-lisp:finish-output)))
     (format stream "~A();~%" fn)))
 
 (defun p2-toplevel (hir &optional (stream *standard-output*) (return-value-p t))
