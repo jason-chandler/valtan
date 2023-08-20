@@ -1,5 +1,7 @@
 (in-package :compiler)
 
+(sb-ext:unlock-package (find-package 'common-lisp))
+
 (defparameter *pass1-form-table* (make-hash-table))
 
 (defvar *require-modules* '())
