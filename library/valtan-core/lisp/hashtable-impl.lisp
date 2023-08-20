@@ -1,5 +1,5 @@
 (defpackage :hash-table-impl
-  (:use :cl)
+  (:use :common-lisp)
   (:shadow :hash-table
            :hash-table-p
            :hash-table-test

@@ -1,5 +1,5 @@
 (common-lisp:defpackage :valtan-core/loop
-  (:use :cl))
+  (:use :common-lisp))
 (common-lisp:in-package :valtan-core/loop)
 
 (defvar *loop-exps*)
